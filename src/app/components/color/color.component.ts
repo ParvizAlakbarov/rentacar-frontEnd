@@ -10,7 +10,8 @@ import { ColorService } from 'src/app/services/color.service';
 export class ColorComponent implements OnInit {
 
   colors:Color[]=[];
-
+  currentColor:Color;
+  isAllSelected:boolean=false;
 
   constructor(private colorService:ColorService) { }
 
@@ -22,5 +23,29 @@ export class ColorComponent implements OnInit {
     this.colorService.getColors().subscribe(response=>{
       this.colors = response.data;
     })
+  }
+
+  setCurrentColor(color:Color){
+    this.currentColor = color;
+    this.isAllSelected=false;
+  }
+  
+  setAllColorClass(isAll:boolean){
+    this.isAllSelected=isAll;
+  }
+
+  getCurrentColorClass(color:Color){
+    if(color==this.currentColor && !this.isAllSelected)
+      return "list-group-item list-group-item-primary";
+    
+    else
+      return "list-group-item";
+  }
+  getAllColorClass(){
+    if(this.isAllSelected)
+      return "list-group-item list-group-item-primary";
+    
+    else
+      return "list-group-item";
   }
 }
