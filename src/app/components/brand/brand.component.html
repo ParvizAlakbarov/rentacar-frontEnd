@@ -1,8 +1,17 @@
-<ul class="list-group">
-    <li (click)="setAllBrands(true)" [class]="getAllBrandClass()" routerLink="/cars">All Brands</li>
+<br>
+<ul class="list-group mb-1">
+    <li class="list-group-item " style="background-color: black; color: #fff; text-align: center;">Brands</li>
+</ul>
+
+<div class="mb-1">
+    <input type="text" [(ngModel)] = "filterText" class="form-control" id="filterBrand"  placeholder="Brand Name"/>
+</div>
+
+<ul  class="list-group" style="cursor: pointer; max-height: 300px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
+    <li *ngIf="filterText.length==0" (click)="setAllBrands(true)" [class]="getAllBrandClass()" routerLink="/cars">All Brands</li>
     <li 
         (click) = "setCurrentBrand(brand)"
-        *ngFor = "let brand of brands"
+        *ngFor = "let brand of brands | filterBrand:filterText"
         routerLink="cars/brands/{{brand.brandName}}"
         [class] = "getCurrentBrandClass(brand)"
         >{{brand.brandName}}

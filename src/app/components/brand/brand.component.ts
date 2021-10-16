@@ -12,6 +12,8 @@ export class BrandComponent implements OnInit {
   brands:Brand[]=[];
   currentBrand:Brand;
   isAllSelected:boolean=false;
+  filterText = "";
+
   constructor(private brandService : BrandService) { }
 
   ngOnInit(): void {

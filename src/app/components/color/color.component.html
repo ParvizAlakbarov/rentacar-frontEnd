@@ -1,10 +1,20 @@
-<br>
-<ul  class="list-group">
-    <li (click)="setAllColorClass(true)" [class]="getAllColorClass()" routerLink="/colors">All Color</li>
-    <li (click) = "setCurrentColor(color)"
-        [class]="getCurrentColorClass(color)"
-        routerLink="cars/colors/{{color.colorName}}"
-        *ngFor = "let color of colors"
-        >{{color.colorName}}
+<br />
+<ul class="list-group mb-1">
+    <li class="list-group-item " style="background-color: black; color: #fff; text-align: center;">Colors</li>
+</ul>
+
+<div class="mb-1">
+    <input type="text" [(ngModel)] = "filterText" class="form-control" id="filterText" placeholder="Color Name" />
+</div>
+
+<ul class="list-group" style="cursor: pointer; max-height: 300px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
+    <li *ngIf = "filterText.length==0" (click)="setAllColorClass(true)" [class]="getAllColorClass()" routerLink="/cars">
+        All Color
     </li>
-  </ul>
+    <li (click)="setCurrentColor(color)" 
+        [class]="getCurrentColorClass(color)"
+        routerLink="cars/colors/{{ color.colorName }}" 
+        *ngFor="let color of colors |filterColor:filterText">
+        {{ color.colorName }}
+    </li>
+</ul>

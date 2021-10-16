@@ -1,20 +1,89 @@
-<table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Brand</th>
-            <th>Color</th>
-            <th>Model Year</th>
-            <th>Daily Price</th>
-        </tr>
-    </thead>
-    <tr *ngFor="let carDetail of carDetails">
-        <td>{{ carDetail.carId }}</td>
-        <td>{{ carDetail.carName }}</td>
-        <td>{{ carDetail.brandName }}</td>
-        <td>{{ carDetail.colorName }}</td>
-        <td>{{ carDetail.modelYear }}</td>
-        <td>{{ carDetail.dailyPrice }}</td>
-    </tr>
-</table>
+<br>
+<div class="row g-3 bg-dark bg-gradient">
+  <div class="col-2">
+    <select class="form-select" (change)="selectBrand($event)" aria-label="Brands">
+      <option value="">All Brands</option>
+      <option *ngFor="let brand of brands" value="{{brand.brandName}}">{{brand.brandName}}</option>
+    </select>
+  </div>
+  <div  class="col-2">
+    <select class="form-select" (change)="selectColor($event)" aria-label="Colors">
+      <option value="">All Colors</option>
+      <option *ngFor="let color of colors" value="{{color.colorName}}">{{color.colorName}}</option>
+    </select>
+  </div>
+  <!-- <div class="col-1">
+    <button type="submit" class="btn btn-primary mb-3">Filtrele</button>
+  </div> -->
+  <div class="col-1">
+    <button (click)="clearFilter()" type="submit" class="btn btn-danger mb-3">Clear</button>
+  </div>  
+  <div class="col-6">
+    <div class="d-flex justify-content-end align-items-center">
+      <div class="mb-1">
+        <input type="text" class="form-control" placeholder="Enter Car Model">        
+      </div>
+    </div>
+  </div>  
+</div>
+<br>
+<div *ngIf="colorTempName.length!=0 || colorTempName.length!=0" class="alert alert-success">{{colorTempName}} {{brandTempName}} filtered</div>
+
+<div class="row">
+  <div *ngFor="let carDetail of carDetails |selectFilter:brandTempName:colorTempName " class="col-lg-4 col-md-6 p-1 mb-3">
+    <div class="card" style="width: 15rem">
+      <!-- <img
+            class="car-image"
+            routerLink="/cars/car-detail/{{ car.carId }}"
+            
+            class="card-img-top"
+            alt="Image"
+            role="button"
+            width="200"
+            height="200"
+          />  -->
+      <!-- <img
+        class="car-image"
+        routerLink="/cars/car-detail/{{ car.carId }}"
+        src="{{ imgUrl }}{{ car.carImage }}"
+        class="card-img-top"
+        alt="Image"
+        role="button"
+        width="200"
+        height="200"
+      /> -->
+      <div class="card-body text-center">
+        <h4>
+          <a
+            routerLink="/cars/car-detail/{{ carDetail.carId }}"
+            class="card-title text-decoration-none h5"
+            style="color: #007bff"
+            >{{ carDetail.brandName }}
+          </a>
+        </h4>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <strong>Brand</strong> - {{ carDetail.carName }}
+        </li>
+        <li class="list-group-item">
+          <strong>Color </strong> - {{ carDetail.colorName }}
+        </li>
+        <li class="list-group-item">
+          <strong>Year</strong> - {{ carDetail.modelYear }}
+        </li>
+        <p class="card-text text-center h3 mt-3">{{ carDetail.dailyPrice }}₺</p>
+      </ul>
+      <div class="card-body">
+        <div class="d-flex action justify-content-between">
+          <a href="" class="btn btn-success">Rent</a>
+          <a
+            class="btn btn-primary"
+            routerLink="/cars/car-details/{{ carDetail.carId }}"
+            >Details</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
